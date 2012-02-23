@@ -109,8 +109,10 @@ package au.com.katalyst.kelpie.flash11.behaviors
       var child:IKelpieMovieClip;
 
       for (var i:int=0; i<kelpieMovieClip.numChildren; i++)
-        if (child = (kelpieMovieClip.getChildAt(i) as IKelpieMovieClip))
-          kelpieMovieClip.add(child, false);
+      {
+        child = kelpieMovieClip.getChildAt(i) as IKelpieMovieClip;
+        if (child) kelpieMovieClip.add(child, false);
+      }
     }
 
     protected function behaviorAssigned(event:BehaviorEvent):void
