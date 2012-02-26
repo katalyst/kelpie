@@ -74,7 +74,7 @@ package au.com.katalyst.kelpie.flash11.behaviors
       var removeDisplayObject:DisplayObject = object as DisplayObject;
 
       if (removeKelpieMovieClip) kelpieMovieClip.kelpieMovieClips.splice(kelpieMovieClip.kelpieMovieClips.indexOf(removeKelpieMovieClip), 1);
-      if (removeDisplayObjectsFromStage && removeDisplayObject && kelpieMovieClip.contains(removeDisplayObject)) kelpieMovieClip.removeChild(removeDisplayObject);
+      if (removeDisplayObjectsFromStage && removeDisplayObject && removeDisplayObject.parent == kelpieMovieClip) kelpieMovieClip.removeChild(removeDisplayObject);
 
       return object;
     }
