@@ -31,9 +31,19 @@ package au.com.katalyst.kelpie.core.behaviors
 
     // PUBLIC METHODS //////////////////////////////////////////////////////////////////////////////
 
+    public function assigned():void
+    {
+      return;
+    }
+
+    public function unassigned():void
+    {
+      return;
+    }
+
     public function update():void
     {
-      object.kelpieObjectList.update();
+      object.kelpieObjectList.update(); // DEPRECATED
     }
 
   }

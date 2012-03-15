@@ -18,8 +18,6 @@ package au.com.katalyst.kelpie.flashpunk
     public function KelpieWorld()
     {
       super();
-
-      _kelpieObjectList = new KelpieObjectList();
     }
 
     // PUBLIC PROPERTIES ///////////////////////////////////////////////////////////////////////////
@@ -40,9 +38,9 @@ package au.com.katalyst.kelpie.flashpunk
       if (!_behavior) updateBehavior();
     }
 
-    // KELPIE OBJECT LIST
+    // KELPIE OBJECT LIST (DEPRECATED)
 
-    protected var _kelpieObjectList:KelpieObjectList;
+    protected var _kelpieObjectList:KelpieObjectList = new KelpieObjectList();
 
     public function get kelpieObjectList():KelpieObjectList
     {
@@ -55,6 +53,22 @@ package au.com.katalyst.kelpie.flashpunk
 
     // PUBLIC METHODS //////////////////////////////////////////////////////////////////////////////
 
+    override public function end():void
+    {
+      super.end();
+
+      behavior = getFinBehavior();
+      updateBehavior();
+    }
+
+    override public function begin():void
+    {
+      super.begin();
+
+      behavior = getInitBehavior();
+      updateBehavior();
+    }
+
     override public function update():void
     {
       super.update();
@@ -64,23 +78,41 @@ package au.com.katalyst.kelpie.flashpunk
 
     // PROTECTED METHODS ///////////////////////////////////////////////////////////////////////////
 
+    protected function getFinBehavior():KelpieBehavior
+    {
+      return null;
+    }
+
+    protected function getInitBehavior():KelpieBehavior
+    {
+      return null;
+    }
+
     protected function updateBehavior():void
     {
-      var newBehavior:KelpieBehavior = this.newBehavior;
-
-      this.newBehavior = null;
-
-      if (newBehavior)
+      if (this.newBehavior)
       {
+        var newBehavior:KelpieBehavior = this.newBehavior;
+
+        this.newBehavior = null;
+
         if (newBehavior != _behavior)
         {
           var oldBehavior:KelpieBehavior = _behavior;
 
-          if (_behavior) _behavior.dispatchEvent(new BehaviorEvent(BehaviorEvent.BEHAVIOR_UNASSIGNED, newBehavior));
+          if (_behavior)
+          {
+            _behavior.dispatchEvent(new BehaviorEvent(BehaviorEvent.BEHAVIOR_UNASSIGNED, newBehavior)); // DEPRECATED
+            _behavior.unassigned();
+          }
 
           _behavior = newBehavior;
 
-          if (_behavior) _behavior.dispatchEvent(new BehaviorEvent(BehaviorEvent.BEHAVIOR_ASSIGNED, oldBehavior));
+          if (_behavior)
+          {
+            _behavior.dispatchEvent(new BehaviorEvent(BehaviorEvent.BEHAVIOR_ASSIGNED, oldBehavior)); // DEPRECATED
+            _behavior.assigned();
+          }
         }
 
         if (this.newBehavior != null) updateBehavior();

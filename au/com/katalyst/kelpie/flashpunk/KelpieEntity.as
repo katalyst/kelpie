@@ -55,6 +55,22 @@ package au.com.katalyst.kelpie.flashpunk
 
     // PUBLIC METHODS //////////////////////////////////////////////////////////////////////////////
 
+    override public function added():void
+    {
+      super.added();
+
+      behavior = getInitBehavior();
+      updateBehavior();
+    }
+
+    override public function removed():void
+    {
+      super.removed();
+
+      behavior = getFinBehavior();
+      updateBehavior();
+    }
+
     override public function update():void
     {
       super.update();
@@ -64,23 +80,41 @@ package au.com.katalyst.kelpie.flashpunk
 
     // PROTECTED METHODS ///////////////////////////////////////////////////////////////////////////
 
+    protected function getFinBehavior():KelpieBehavior
+    {
+      return null;
+    }
+
+    protected function getInitBehavior():KelpieBehavior
+    {
+      return null;
+    }
+
     protected function updateBehavior():void
     {
-      var newBehavior:KelpieBehavior = this.newBehavior;
-
-      this.newBehavior = null;
-
-      if (newBehavior)
+      if (this.newBehavior)
       {
+        var newBehavior:KelpieBehavior = this.newBehavior;
+
+        this.newBehavior = null;
+
         if (newBehavior != _behavior)
         {
           var oldBehavior:KelpieBehavior = _behavior;
 
-          if (_behavior) _behavior.dispatchEvent(new BehaviorEvent(BehaviorEvent.BEHAVIOR_UNASSIGNED, newBehavior));
+          if (_behavior)
+          {
+            _behavior.dispatchEvent(new BehaviorEvent(BehaviorEvent.BEHAVIOR_UNASSIGNED, newBehavior)); // DEPRECATED
+            _behavior.unassigned();
+          }
 
           _behavior = newBehavior;
 
-          if (_behavior) _behavior.dispatchEvent(new BehaviorEvent(BehaviorEvent.BEHAVIOR_ASSIGNED, oldBehavior));
+          if (_behavior)
+          {
+            _behavior.dispatchEvent(new BehaviorEvent(BehaviorEvent.BEHAVIOR_ASSIGNED, oldBehavior)); // DEPRECATED
+            _behavior.assigned();
+          }
         }
 
         if (this.newBehavior != null) updateBehavior();
