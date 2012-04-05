@@ -19,6 +19,8 @@ package au.com.katalyst.kelpie.flashpunk
     {
       super();
 
+      initOnAdd = true;
+      finOnRemove = true;
       _kelpieObjectList = new KelpieObjectList();
     }
 
@@ -40,6 +42,14 @@ package au.com.katalyst.kelpie.flashpunk
       if (!_behavior) updateBehavior();
     }
 
+    // FIN ON REMOVE
+
+    public var finOnRemove:Boolean;
+
+    // INIT ON ADD
+
+    public var initOnAdd:Boolean;
+
     // KELPIE OBJECT LIST
 
     protected var _kelpieObjectList:KelpieObjectList;
@@ -59,6 +69,19 @@ package au.com.katalyst.kelpie.flashpunk
     {
       super.added();
 
+      if (initOnAdd) init();
+    }
+
+    public function fin():void
+    {
+      finOnRemove = false;
+      behavior = getFinBehavior();
+      updateBehavior();
+    }
+
+    public function init():void
+    {
+      initOnAdd = false;
       behavior = getInitBehavior();
       updateBehavior();
     }
@@ -67,8 +90,7 @@ package au.com.katalyst.kelpie.flashpunk
     {
       super.removed();
 
-      behavior = getFinBehavior();
-      updateBehavior();
+      if (finOnRemove) fin();
     }
 
     override public function update():void
