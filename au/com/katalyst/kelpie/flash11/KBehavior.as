@@ -1,39 +1,31 @@
-package au.com.katalyst.kelpie.core.behaviors
+package au.com.katalyst.kelpie.flash11
 {
 
-  import au.com.katalyst.kelpie.flash11.*;
   import au.com.katalyst.kelpie.core.*;
+  import au.com.katalyst.kelpie.flash11.*;
 
-  import flash.events.*;
-
-  public class KelpieBehavior extends EventDispatcher
+  public class KBehavior extends au.com.katalyst.kelpie.core.KBehavior
   {
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////////////////////////
 
-    public function KelpieBehavior(object:IKelpieObject)
+    public function KBehavior(element:KElement)
     {
-      super();
-
-      _object = object;
+      super(element);
     }
 
     // PUBLIC PROPERTIES ///////////////////////////////////////////////////////////////////////////
 
-    // OBJECT
-
-    protected var _object:IKelpieObject;
-
-    public function get object():IKelpieObject
+    public function get element():KElement
     {
-      return _object;
+      return object as KElement;
     }
 
     // PUBLIC METHODS //////////////////////////////////////////////////////////////////////////////
 
     public function update():void
     {
-      object.kelpieObjectList.update();
+      return;
     }
 
   }
