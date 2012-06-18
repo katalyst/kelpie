@@ -11,7 +11,7 @@ package au.com.katalyst.kelpie.flash11
 
     // NAMESPACES //////////////////////////////////////////////////////////////////////////////////
 
-    private namespace kelpie;
+    public namespace kelpie = "http://katalyst.com.au/kelpie";
 
     // CONSTRUCTOR /////////////////////////////////////////////////////////////////////////////////
 
@@ -73,7 +73,7 @@ package au.com.katalyst.kelpie.flash11
 
     public function fin():void
     {
-      behavior = getFinBehavior();
+      behavior = kelpie::getFinBehavior();
       updateBehavior();
 
       removeEventListener(Event.ENTER_FRAME, kelpie::enterFrame);
@@ -81,7 +81,7 @@ package au.com.katalyst.kelpie.flash11
 
     public function init():void
     {
-      behavior = getInitBehavior();
+      behavior = kelpie::getInitBehavior();
       updateBehavior();
 
       if (updateOnEnterFrame) addEventListener(Event.ENTER_FRAME, kelpie::enterFrame, false, 0, true);
@@ -92,7 +92,7 @@ package au.com.katalyst.kelpie.flash11
       if (behavior) behavior.update();
     }
 
-    // PROTECTED METHODS ///////////////////////////////////////////////////////////////////////////
+    // KELPIE METHODS //////////////////////////////////////////////////////////////////////////////
 
     kelpie function addedToStage(event:Event):void
     {
@@ -118,12 +118,12 @@ package au.com.katalyst.kelpie.flash11
       updateBehavior();
     }
 
-    protected function getInitBehavior():KBehavior
+    kelpie function getInitBehavior():KBehavior
     {
       return new KBehavior(this);
     }
 
-    protected function getFinBehavior():KBehavior
+    kelpie function getFinBehavior():KBehavior
     {
       return new KBehavior(this);
     }
